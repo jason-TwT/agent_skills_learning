@@ -177,7 +177,7 @@ def load_ollama_options():
         return {}
 
 
-def chat_loop(request_fn, model, system_prompt, options):
+def chat_loop(request_fn, model, system_prompt, options, assistant_label):
     print("进入连续对话模式，输入 /exit 退出。")
     history = []
     while True:
@@ -205,13 +205,13 @@ def chat_loop(request_fn, model, system_prompt, options):
         except Exception as exc:
             print("请求失败:", exc)
             continue
-        print(f"\nAI> {reply}\n")
+        print(f"\n{assistant_label}> {reply}\n")
         history.append({"role": "user", "content": user_text})
         history.append({"role": "assistant", "content": reply})
         history = history[-6:]
 
 
-def chat_auto_loop(request_fn, model, skills, options):
+def chat_auto_loop(request_fn, model, skills, options, assistant_label):
     print("进入连续对话模式（自动选技能），输入 /exit 退出。")
     history = []
     base_prompt = "你是一个助手。回答要清晰、分步骤。"
@@ -249,7 +249,7 @@ def chat_auto_loop(request_fn, model, skills, options):
         except Exception as exc:
             print("请求失败:", exc)
             continue
-        print(f"\nAI> {reply}\n")
+        print(f"\n{assistant_label}> {reply}\n")
         history.append({"role": "user", "content": user_text})
         history.append({"role": "assistant", "content": reply})
         history = history[-6:]
@@ -276,6 +276,7 @@ def main():
 
     if provider == "deepseek":
         model = os.getenv("DEEPSEEK_MODEL", "deepseek-chat")
+    assistant_label = "DeepSeek" if provider == "deepseek" else "AI"
 
     skills_root = "skills"
     options = load_ollama_options()
@@ -303,7 +304,7 @@ def main():
     if mode == "--chat-auto":
         skills = list_skills(skills_root)
         print("[CHAT-AUTO] 将在每次对话中自动选择技能。")
-        chat_auto_loop(request_fn, model, skills, options)
+        chat_auto_loop(request_fn, model, skills, options, assistant_label)
         sys.exit(0)
     elif mode == "--chat-skill":
         if len(sys.argv) < 3:
@@ -318,7 +319,7 @@ def main():
         skill_text = read_text(skill_file)
         references = collect_reference_files(skill_dir)
         system_prompt = build_system_prompt(skill_text, references)
-        chat_loop(request_fn, model, system_prompt, options)
+        chat_loop(request_fn, model, system_prompt, options, assistant_label)
         sys.exit(0)
     elif mode == "--auto":
         if len(sys.argv) < 3:
