@@ -1,29 +1,32 @@
 Agent Skills Learning (DeepSeek Cloud)
 
-最小可运行的 Skills 学习项目：用 DeepSeek 云模型读取本地 Skill 文档，体验“技能驱动”的 Agent 交互。
+面向技能驱动的 Agent 学习项目，提供可视化聊天界面，支持本地 Skill 文档解析与自动选择技能。
 
 ## 环境要求
+- Python 3
 - DeepSeek API Key
-- Python 3（系统自带即可）
 
-## 快速开始
-1. 设置环境变量：
+## 快速开始（可视化界面）
+1. 设置环境变量（推荐直接写到项目根目录的 `.env` 文件）：
 ```
-export DEEPSEEK_API_KEY="你的Key"
-export DEEPSEEK_MODEL=deepseek-chat
+DEEPSEEK_API_KEY=你的Key
+DEEPSEEK_MODEL=deepseek-chat
 ```
-2. 运行示例（在项目根目录）：
+如果你用终端启动，也可以用 `export` 的方式设置。
+2. 启动界面（在项目根目录）：
 ```
-python3 scripts/run_skill.py --model-auto "把这段话做成摘要和 TODO：..."
+./start_mac.sh
 ```
+或在 Windows：
+```
+start_windows.bat
+```
+3. 浏览器会自动打开 `http://localhost:8000`。
 
-## 常用命令
-- 查看技能列表：`python3 scripts/run_skill.py --list`
-- 自动匹配技能：`python3 scripts/run_skill.py --auto "..."`  
-- 模型自动选技能：`python3 scripts/run_skill.py --model-auto "..."`  
-- 指定技能：`python3 scripts/run_skill.py --skill summary-skill "..."`  
-- 连续对话（自动选技能）：`python3 scripts/run_skill.py --chat-auto`  
-- 连续对话（指定技能）：`python3 scripts/run_skill.py --chat-skill summary-skill`
+## 使用方法（界面）
+1. 右上角选择技能（或保持“自动识别”）。
+2. 在输入框输入内容并发送。
+3. 关闭浏览器页面后，服务会在约 30 秒内自动终止。
 
 ## 当前内置技能
 - `summary-skill`：摘要 + 要点 + TODO
@@ -38,22 +41,21 @@ skills/
       summary-format.md
 ```
 
-## 新手上手步骤
-1. **理解结构**：每个技能是一个文件夹，核心文件是 `SKILL.md`。
-2. **复制模板**：从 `skills/summary-skill` 复制一份改名。
-3. **编写说明**：补充目标、流程、输出格式。
-4. **运行验证**：使用 `--skill <name>` 测试输出。
-
 ## 配置说明
 - `DEEPSEEK_API_KEY`：你的 Key
-- `DEEPSEEK_MODEL`：默认 `deepseek-chat`（非思考模式）
+- `DEEPSEEK_MODEL`：默认 `deepseek-chat`
+- `DEEPSEEK_BASE_URL`：默认 `https://api.deepseek.com`
 
-## 提速建议
-- 精简 `SKILL.md` 与参考资料。
-- 控制输入/输出长度，避免长文本。
-- 优先使用 `deepseek-chat`。
+## 添加/扩展技能
+1. 在 `skills/` 下新建目录。
+2. 添加 `SKILL.md`，可在文件头部使用 `---` 元信息（如 `name`、`description`）。
+3. 可选添加 `reference/` 目录放参考资料，内容会注入到系统提示中。
 
-## 下一步可扩展
-- 工具调用（时间/计算/文件读取）
-- JSON 行动指令输出
-- 最小任务分解循环
+## 直接启动服务
+```
+python3 backend/scripts/server.py
+```
+如不想自动打开浏览器：
+```
+python3 backend/scripts/server.py --no-browser
+```

@@ -6,6 +6,12 @@ import sys
 import urllib.request
 
 
+# --- Paths ---
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+PROJECT_ROOT = os.path.abspath(os.path.join(SCRIPT_DIR, "..", ".."))
+SKILLS_DIR = os.path.join(PROJECT_ROOT, "skills")
+
+
 def read_text(path):
     with open(path, "r", encoding="utf-8") as f:
         return f.read().strip()
@@ -258,12 +264,12 @@ def chat_auto_loop(request_fn, model, skills, options, assistant_label):
 def main():
     if len(sys.argv) < 2:
         print("用法:")
-        print("  python3 scripts/run_skill.py --list")
-        print("  python3 scripts/run_skill.py --auto \"用户输入\"")
-        print("  python3 scripts/run_skill.py --model-auto \"用户输入\"")
-        print("  python3 scripts/run_skill.py --skill <skill-name> \"用户输入\"")
-        print("  python3 scripts/run_skill.py --chat-auto")
-        print("  python3 scripts/run_skill.py --chat-skill <skill-name>")
+        print("  python3 backend/scripts/run_skill.py --list")
+        print("  python3 backend/scripts/run_skill.py --auto \"用户输入\"")
+        print("  python3 backend/scripts/run_skill.py --model-auto \"用户输入\"")
+        print("  python3 backend/scripts/run_skill.py --skill <skill-name> \"用户输入\"")
+        print("  python3 backend/scripts/run_skill.py --chat-auto")
+        print("  python3 backend/scripts/run_skill.py --chat-skill <skill-name>")
         sys.exit(1)
 
     host = os.getenv("OLLAMA_HOST", "http://localhost:11434")
@@ -278,7 +284,7 @@ def main():
         model = os.getenv("DEEPSEEK_MODEL", "deepseek-chat")
     assistant_label = "DeepSeek" if provider == "deepseek" else "AI"
 
-    skills_root = "skills"
+    skills_root = SKILLS_DIR
     options = load_ollama_options()
     if provider == "deepseek":
         if not deepseek_api_key:
@@ -308,7 +314,7 @@ def main():
         sys.exit(0)
     elif mode == "--chat-skill":
         if len(sys.argv) < 3:
-            print("用法: python3 scripts/run_skill.py --chat-skill <skill-name>")
+            print("用法: python3 backend/scripts/run_skill.py --chat-skill <skill-name>")
             sys.exit(1)
         skill_name = sys.argv[2]
         skill_dir = os.path.join(skills_root, skill_name)
@@ -323,7 +329,7 @@ def main():
         sys.exit(0)
     elif mode == "--auto":
         if len(sys.argv) < 3:
-            print("用法: python3 scripts/run_skill.py --auto \"用户输入\"")
+            print("用法: python3 backend/scripts/run_skill.py --auto \"用户输入\"")
             sys.exit(1)
         user_text = sys.argv[2]
         skills = list_skills(skills_root)
@@ -332,7 +338,6 @@ def main():
             print(f"[AUTO] 使用技能：{chosen['name']}")
             skill_dir = chosen["dir"]
             skill_file = chosen["file"]
-            meta, body = parse_skill_file(skill_file)
             skill_text = read_text(skill_file)
             references = collect_reference_files(skill_dir)
             system_prompt = build_system_prompt(skill_text, references)
@@ -341,11 +346,10 @@ def main():
             system_prompt = "你是一个助手。回答要清晰、分步骤。"
     elif mode == "--model-auto":
         if len(sys.argv) < 3:
-            print("用法: python3 scripts/run_skill.py --model-auto \"用户输入\"")
+            print("用法: python3 backend/scripts/run_skill.py --model-auto \"用户输入\"")
             sys.exit(1)
         user_text = sys.argv[2]
         skills = list_skills(skills_root)
-        chosen = choose_skill_by_model(request_fn, model, skills, user_text)
         chosen = choose_skill_by_model(request_fn, model, skills, user_text)
         if chosen:
             print(f"[MODEL-AUTO] 使用技能：{chosen['name']}")
@@ -359,7 +363,7 @@ def main():
             system_prompt = "你是一个助手。回答要清晰、分步骤。"
     elif mode == "--skill":
         if len(sys.argv) < 4:
-            print("用法: python3 scripts/run_skill.py --skill <skill-name> \"用户输入\"")
+            print("用法: python3 backend/scripts/run_skill.py --skill <skill-name> \"用户输入\"")
             sys.exit(1)
         skill_name = sys.argv[2]
         user_text = sys.argv[3]
