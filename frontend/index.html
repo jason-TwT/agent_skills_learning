@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent Skills Chat</title>
+    <style>
+        :root {
+            /* Color Palette - Refined & Modern */
+            --primary-color: #2563eb; /* Stronger Blue */
+            --primary-hover: #1d4ed8;
+            --bg-color: #f3f4f6; /* Light Cool Gray */
+            --surface-color: #ffffff;
+            --text-primary: #111827;
+            --text-secondary: #6b7280;
+            --user-msg-bg: #2563eb;
+            --user-msg-text: #ffffff;
+            --ai-msg-bg: #ffffff;
+            --ai-msg-text: #1f2937;
+            --border-radius: 20px;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+
+        * { box-sizing: border-box; }
+
+        html {
+            font-size: 16px; /* Standard base size */
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--bg-color);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            color: var(--text-primary);
+            overflow: hidden;
+            line-height: 1.5;
+        }
+
+        /* Header */
+        .header {
+            background: #ffffff;
+            padding: 0 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 1px 0 rgba(27, 31, 36, 0.04);
+            z-index: 20;
+            height: 64px;
+            border-bottom: 1px solid #d0d7de;
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.08rem;
+            color: #111827;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            letter-spacing: -0.01em;
+        }
+
+        .logo .logo-mark {
+            width: 32px;
+            height: 32px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            background: transparent;
+            box-shadow: none;
+            overflow: hidden;
+        }
+
+        .logo .logo-image {
+            width: 28px;
+            height: 28px;
+            display: block;
+            border-radius: 6px;
+        }
+
+        .controls {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        /* Skill Dropdown (GitHub-like) */
+        .skill-dropdown {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .skill-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background-color: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            padding: 6px 12px 6px 12px;
+            height: 36px;
+            min-width: 200px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #24292f;
+            cursor: pointer;
+            box-shadow: var(--shadow-sm);
+            transition: background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+            justify-content: space-between;
+        }
+
+        .skill-button:hover {
+            background-color: #f8fafc;
+            border-color: #d0d7de;
+        }
+
+        .skill-button:focus-visible {
+            outline: none;
+            border-color: #93c5fd;
+            box-shadow: 0 0 0 3px rgba(147, 197, 253, 0.35);
+        }
+
+        .skill-button-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 400;
+            color: var(--text-primary);
+        }
+
+        .skill-button-label::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+        }
+
+        .skill-button .select-arrow {
+            margin-left: auto;
+            color: #57606a;
+            font-size: 0.7rem;
+        }
+
+        .skill-menu {
+            position: absolute;
+            right: 0;
+            top: calc(100% + 6px);
+            min-width: 220px;
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            box-shadow: 0 10px 24px rgba(15, 23, 42, 0.12);
+            padding: 8px;
+            font-weight: 400;
+            display: none;
+            z-index: 50;
+        }
+
+        .skill-menu.open {
+            display: block;
+        }
+
+        .skill-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 0.92rem;
+            color: #24292f;
+            cursor: pointer;
+            border: 1px solid transparent;
+            transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+            font-weight: 400;
+        }
+
+        .skill-item:hover {
+            background: #f8fafc;
+            border-color: #e2e8f0;
+        }
+
+        .skill-item.active {
+            background: rgba(37, 99, 235, 0.12);
+            color: #1d4ed8;
+            border-color: rgba(37, 99, 235, 0.3);
+            font-weight: 400;
+        }
+
+        /* Chat Area */
+        .chat-container {
+            flex: 1;
+            /* Remove max-width/margin to allow full width scrolling */
+            width: 100%;
+            overflow-y: scroll; /* Always show scrollbar track to avoid layout shift */
+            display: flex;
+            flex-direction: column;
+            scroll-behavior: smooth;
+            padding-bottom: 30px; /* More bottom space */
+        }
+
+        /* Inner container for centering content */
+        .chat-content {
+            width: 100%;
+            max-width: 900px; /* Wider reading area */
+            margin: 0 auto;
+            padding: 32px 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px; /* More breathing room between messages */
+            flex: 1; /* Ensure it takes height */
+        }
+
+        .message-group {
+            display: flex;
+            flex-direction: column;
+            max-width: 80%; /* Allow wider messages */
+            animation: slideIn 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .message-group.user {
+            align-self: flex-end;
+            align-items: flex-end;
+        }
+
+        .message-group.ai {
+            align-self: flex-start;
+            align-items: flex-start;
+        }
+
+        .message-bubble {
+            padding: 11px 18px;
+            border-radius: 18px;
+            font-size: 0.95rem;
+            line-height: 1.55;
+            position: relative;
+            box-shadow: var(--shadow-sm);
+            word-wrap: break-word;
+        }
+
+        .message-group.user .message-bubble {
+            background-color: var(--user-msg-bg);
+            color: var(--user-msg-text);
+            border-bottom-right-radius: 4px;
+            box-shadow: 0 4px 8px rgba(37, 99, 235, 0.25);
+        }
+
+        .message-group.ai .message-bubble {
+            background-color: var(--ai-msg-bg);
+            color: var(--ai-msg-text);
+            border-bottom-left-radius: 4px;
+            border: 1px solid rgba(0,0,0,0.04);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .skill-badge {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-left: 4px;
+            font-weight: 500;
+            line-height: 1;
+            padding: 0;
+            background: transparent;
+            border: none;
+            box-shadow: none;
+        }
+
+        .skill-badge::before {
+            content: '';
+            width: 12px;
+            height: 12px;
+            background-color: var(--primary-color);
+            display: inline-block;
+            vertical-align: middle;
+            -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='black' d='M12 2l1.9 5.6L20 9.4l-6.1 2.2L12 18l-1.9-6.4L4 9.4l6.1-1.8z'/></svg>") center / contain no-repeat;
+            mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='black' d='M12 2l1.9 5.6L20 9.4l-6.1 2.2L12 18l-1.9-6.4L4 9.4l6.1-1.8z'/></svg>") center / contain no-repeat;
+        }
+
+        .skill-badge-name {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+
+        .system-message {
+            align-self: center;
+            background-color: rgba(0, 0, 0, 0.03);
+            padding: 8px 16px;
+            border-radius: 100px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin: 16px 0;
+            text-align: center;
+            border: 1px solid rgba(0,0,0,0.02);
+        }
+
+        .system-message-row {
+            align-self: center;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin: 16px 0;
+        }
+
+        .system-message-row .system-message {
+            margin: 0;
+        }
+
+        .system-message-row .system-action-btn {
+            background: #ffffff;
+            color: #1d4ed8;
+            border: 1px solid #c7d2fe;
+            padding: 4px 10px;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+        }
+
+        .system-message-row .system-action-btn:hover {
+            background: #eef2ff;
+            border-color: #a5b4fc;
+        }
+
+        .system-message-row .system-action-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        /* Markdown Styles */
+        .message-bubble pre {
+            background: #f8fafc;
+            padding: 12px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 8px 0;
+            border: 1px solid #e2e8f0;
+            font-size: 0.9em;
+        }
+
+        .message-bubble code {
+            font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+            background: rgba(0,0,0,0.04);
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+        
+        .message-bubble p { margin: 0 0 8px 0; }
+        .message-bubble p:last-child { margin: 0; }
+
+        /* Input Area */
+        .input-area {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 18px 20px;
+            border-top: 1px solid rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: center;
+            z-index: 10;
+        }
+
+        .input-wrapper {
+            max-width: 900px;
+            width: 100%;
+            display: flex;
+            gap: 12px;
+            background: var(--surface-color);
+            padding: 6px 6px 6px 18px;
+            border-radius: 26px;
+            box-shadow: var(--shadow-md);
+            border: 1px solid rgba(0,0,0,0.06);
+            transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+            align-items: center;
+        }
+
+        .input-wrapper:focus-within {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.08);
+            border-color: rgba(37, 99, 235, 0.3);
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 8px 0;
+            border: none;
+            background: transparent;
+            font-size: 0.98rem;
+            outline: none;
+            color: var(--text-primary);
+            min-height: 22px;
+            font-weight: 400;
+        }
+
+        input[type="text"]::placeholder {
+            color: #9ca3af;
+            font-weight: 400;
+        }
+
+        button#sendBtn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            box-shadow: 0 3px 5px rgba(37, 99, 235, 0.2);
+            flex-shrink: 0;
+        }
+
+        button#sendBtn:hover:not(:disabled) {
+            background-color: var(--primary-hover);
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(37, 99, 235, 0.3);
+        }
+
+        button#sendBtn:active:not(:disabled) {
+            transform: scale(0.95);
+        }
+
+        button#sendBtn svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+            margin-left: 2px;
+        }
+        
+        button#sendBtn:disabled {
+            background-color: #e5e7eb;
+            color: #9ca3af;
+            cursor: default;
+            box-shadow: none;
+            transform: none;
+        }
+
+        /* Typing Indicator */
+        .typing-indicator {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 12px 18px;
+            background: var(--ai-msg-bg);
+            border-radius: var(--border-radius);
+            border-bottom-left-radius: 4px;
+            width: fit-content;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid rgba(0,0,0,0.04);
+        }
+
+        .dot {
+            width: 6px;
+            height: 6px;
+            background-color: #9ca3af;
+            border-radius: 50%;
+            animation: bounce 1.4s infinite ease-in-out both;
+        }
+
+        .dot:nth-child(1) { animation-delay: -0.32s; }
+        .dot:nth-child(2) { animation-delay: -0.16s; }
+
+        @keyframes bounce {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1); }
+        }
+
+        .loading-container {
+            display: none;
+            align-self: flex-start;
+            margin-top: 4px;
+        }
+        
+        .loading-container.active {
+            display: block;
+        }
+
+        /* Scrollbar Styling */
+        .chat-container::-webkit-scrollbar {
+            width: 10px;
+        }
+        .chat-container::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .chat-container::-webkit-scrollbar-thumb {
+            background-color: rgba(0,0,0,0.1);
+            border-radius: 5px;
+            border: 2px solid transparent;
+            background-clip: content-box;
+        }
+        .chat-container::-webkit-scrollbar-thumb:hover {
+            background-color: rgba(0,0,0,0.2);
+        }
+
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">
+            <span class="logo-mark" aria-hidden="true">
+                <img class="logo-image" src="assets/logo.png" alt="Agent Skills">
+            </span>
+            Agent Skills
+        </div>
+        <div class="controls">
+            <div class="skill-dropdown" id="skillDropdown">
+                <button class="skill-button" id="skillButton" type="button" aria-haspopup="listbox" aria-expanded="false">
+                    <span class="skill-button-label" id="skillButtonLabel">自动识别</span>
+                    <span class="select-arrow">▼</span>
+                </button>
+                <div class="skill-menu" id="skillMenu" role="listbox" aria-label="技能列表"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="chat-container" id="chatContainer">
+        <div class="chat-content" id="chatContent">
+            <div class="system-message">欢迎回来，今天想聊点什么？</div>
+        </div>
+    </div>
+
+    <!-- Loading Indicator (Hidden initially) -->
+    <template id="loadingTemplate">
+        <div class="message-group ai loading-container" id="loadingIndicator">
+            <div class="typing-indicator">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+            </div>
+        </div>
+    </template>
+
+    <div class="input-area">
+        <div class="input-wrapper">
+            <input type="text" id="userInput" placeholder="输入你的想法..." autocomplete="off">
+            <button id="sendBtn" aria-label="发送">
+                <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const chatContainer = document.getElementById('chatContainer');
+        const chatContent = document.getElementById('chatContent');
+        const userInput = document.getElementById('userInput');
+        const sendBtn = document.getElementById('sendBtn');
+        const skillDropdown = document.getElementById('skillDropdown');
+        const skillButton = document.getElementById('skillButton');
+        const skillButtonLabel = document.getElementById('skillButtonLabel');
+        const skillMenu = document.getElementById('skillMenu');
+        const loadingTemplate = document.getElementById('loadingTemplate');
+        
+        
+        let isProcessing = false;
+        let loadingElement = null;
+        let selectedSkillValue = 'auto';
+
+        function closeSkillMenu() {
+            skillMenu.classList.remove('open');
+            skillButton.setAttribute('aria-expanded', 'false');
+        }
+
+        function openSkillMenu() {
+            skillMenu.classList.add('open');
+            skillButton.setAttribute('aria-expanded', 'true');
+        }
+
+        function renderSkillItem(skill) {
+            const item = document.createElement('div');
+            item.className = 'skill-item';
+            item.textContent = skill.label;
+            item.dataset.value = skill.value;
+            if (skill.value === selectedSkillValue) {
+                item.classList.add('active');
+            }
+            item.addEventListener('click', () => {
+                selectedSkillValue = skill.value;
+                skillButtonLabel.textContent = skill.label;
+                Array.from(skillMenu.children).forEach(child => child.classList.remove('active'));
+                item.classList.add('active');
+                closeSkillMenu();
+            });
+            return item;
+        }
+
+        // Fetch skills on load
+        async function loadSkills() {
+            try {
+                const res = await fetch('/skills');
+                if (res.ok) {
+                    const skills = await res.json();
+                    const allSkills = [{ value: 'auto', label: '自动识别' }]
+                        .concat(skills.map(skill => ({ value: skill.name, label: skill.name })));
+                    skillMenu.innerHTML = '';
+                    allSkills.forEach(skill => {
+                        skillMenu.appendChild(renderSkillItem(skill));
+                    });
+                }
+            } catch (e) {
+                console.error("Failed to load skills", e);
+            }
+        }
+
+        loadSkills();
+
+        skillButton.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (skillMenu.classList.contains('open')) {
+                closeSkillMenu();
+            } else {
+                openSkillMenu();
+            }
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!skillDropdown.contains(e.target)) {
+                closeSkillMenu();
+            }
+        });
+
+        let heartbeatFailCount = 0;
+        let heartbeatOnline = true;
+        let heartbeatInFlight = false;
+        let disconnectNotified = false;
+        let disconnectMessageEl = null;
+        const HEARTBEAT_INTERVAL = 5000;
+        const HEARTBEAT_TIMEOUT = 3000;
+        const HEARTBEAT_FAIL_THRESHOLD = 2;
+
+        function appendSystemMessage(text) {
+            const systemDiv = document.createElement('div');
+            systemDiv.className = 'system-message';
+            systemDiv.textContent = text;
+            chatContent.appendChild(systemDiv);
+            scrollToBottom();
+        }
+
+        function appendDisconnectMessage() {
+            if (disconnectMessageEl) return;
+            const row = document.createElement('div');
+            row.className = 'system-message-row';
+
+            const systemDiv = document.createElement('div');
+            systemDiv.className = 'system-message';
+
+            const textSpan = document.createElement('span');
+            textSpan.textContent = '检测到脚本已断开，请在终端重启或点击右侧按钮。';
+
+            const actionBtn = document.createElement('button');
+            actionBtn.className = 'system-action-btn';
+            actionBtn.type = 'button';
+            actionBtn.textContent = '重新启动';
+            actionBtn.addEventListener('click', async () => {
+                actionBtn.disabled = true;
+                textSpan.textContent = '正在尝试重新启动...';
+                try {
+                    await fetch('http://localhost:8010/restart', { method: 'POST' });
+                } catch (e) {
+                    // Manager may be down; continue polling
+                }
+                const recovered = await waitForRecovery();
+                if (!recovered) {
+                    textSpan.textContent = '仍未连接，请确保脚本已重启后再试。';
+                    actionBtn.disabled = false;
+                }
+            });
+
+            systemDiv.appendChild(textSpan);
+            row.appendChild(systemDiv);
+            row.appendChild(actionBtn);
+            chatContent.appendChild(row);
+            disconnectMessageEl = row;
+            scrollToBottom();
+        }
+
+        async function waitForRecovery() {
+            for (let i = 0; i < 6; i += 1) {
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                await checkHeartbeat(true);
+                if (heartbeatOnline) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        async function checkHeartbeat(forceShow = false) {
+            if (heartbeatInFlight) return;
+            heartbeatInFlight = true;
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), HEARTBEAT_TIMEOUT);
+
+            try {
+                const res = await fetch('/heartbeat', {
+                    method: 'GET',
+                    cache: 'no-store',
+                    keepalive: true,
+                    signal: controller.signal
+                });
+                if (!res.ok) throw new Error('Heartbeat failed');
+                heartbeatFailCount = 0;
+                if (!heartbeatOnline) {
+                    heartbeatOnline = true;
+                    if (disconnectNotified) {
+                        appendSystemMessage('服务已恢复，可以继续对话。');
+                    }
+                    disconnectNotified = false;
+                    disconnectMessageEl = null;
+                }
+            } catch (e) {
+                heartbeatFailCount += 1;
+                if (heartbeatFailCount >= HEARTBEAT_FAIL_THRESHOLD || forceShow) {
+                    heartbeatOnline = false;
+                    if (!disconnectNotified) {
+                        appendDisconnectMessage();
+                        disconnectNotified = true;
+                    }
+                }
+            } finally {
+                clearTimeout(timeoutId);
+                heartbeatInFlight = false;
+            }
+        }
+
+        checkHeartbeat();
+        setInterval(checkHeartbeat, HEARTBEAT_INTERVAL);
+
+        function showLoading() {
+            if (loadingElement) return;
+            const clone = loadingTemplate.content.cloneNode(true);
+            loadingElement = clone.querySelector('.loading-container');
+            loadingElement.classList.add('active');
+            chatContent.appendChild(loadingElement);
+            scrollToBottom();
+        }
+
+        function hideLoading() {
+            if (loadingElement) {
+                loadingElement.remove();
+                loadingElement = null;
+            }
+        }
+        
+        function scrollToBottom() {
+            chatContainer.scrollTo({
+                top: chatContainer.scrollHeight,
+                behavior: 'smooth'
+            });
+        }
+
+        function appendMessage(text, type, skillName = null) {
+            const groupDiv = document.createElement('div');
+            groupDiv.className = `message-group ${type}`;
+
+            // Add skill badge for AI responses if a specific skill was used
+            if (skillName && type === 'ai') {
+                const badge = document.createElement('div');
+                badge.className = 'skill-badge';
+
+                const name = document.createElement('span');
+                name.className = 'skill-badge-name';
+                name.textContent = skillName;
+
+                badge.appendChild(name);
+                groupDiv.appendChild(badge);
+            }
+
+            const bubble = document.createElement('div');
+            bubble.className = 'message-bubble';
+            
+            // Simple formatter
+            let formattedText = text
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/\n/g, '<br>');
+            
+            // Basic Markdown code block detection (very simple)
+            formattedText = formattedText.replace(/```([\s\S]*?)```/g, '<pre><code>$1</code></pre>');
+
+            bubble.innerHTML = formattedText;
+            groupDiv.appendChild(bubble);
+            
+            // Insert before loading indicator if it exists
+            if (loadingElement) {
+                chatContent.insertBefore(groupDiv, loadingElement);
+            } else {
+                chatContent.appendChild(groupDiv);
+            }
+            
+            scrollToBottom();
+        }
+
+        async function sendMessage() {
+            const text = userInput.value.trim();
+            if (!text || isProcessing) return;
+
+            const selectedSkill = selectedSkillValue;
+            
+            userInput.value = '';
+            appendMessage(text, 'user');
+            
+            isProcessing = true;
+            sendBtn.disabled = true;
+            showLoading();
+
+            try {
+                const response = await fetch('/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        message: text,
+                        skill: selectedSkill 
+                    })
+                });
+                
+                if (!response.ok) throw new Error('Network response was not ok');
+                
+                const data = await response.json();
+                hideLoading();
+                appendMessage(data.reply, 'ai', data.skill);
+            } catch (error) {
+                hideLoading();
+                appendMessage(`Error: ${error.message}`, 'system');
+            } finally {
+                isProcessing = false;
+                sendBtn.disabled = false;
+                userInput.focus();
+            }
+        }
+
+        sendBtn.addEventListener('click', sendMessage);
+        userInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') sendMessage();
+        });
+
+        userInput.focus();
+    </script>
+</body>
+</html>
