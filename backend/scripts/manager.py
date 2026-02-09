@@ -14,6 +14,8 @@ PROJECT_ROOT = os.path.abspath(os.path.join(SCRIPT_DIR, "..", ".."))
 MANAGER_PORT = 8010
 SERVER_PORT = 8000
 SERVER_CMD = [sys.executable, os.path.join(SCRIPT_DIR, "server.py"), "--no-browser"]
+LOG_DIR = os.path.join(PROJECT_ROOT, "backend", "logs")
+SERVER_LOG = os.path.join(LOG_DIR, "manager-server.log")
 
 
 def is_port_open(port):
@@ -53,14 +55,20 @@ def start_server():
     if is_port_open(SERVER_PORT):
         return True
     kill_port_process(SERVER_PORT)
+    os.makedirs(LOG_DIR, exist_ok=True)
+    log_file = open(SERVER_LOG, "a", encoding="utf-8")
+    log_file.write("[manager] start_server invoked\n")
+    log_file.flush()
     try:
         subprocess.Popen(
             SERVER_CMD,
             cwd=PROJECT_ROOT,
-            stdout=subprocess.DEVNULL,
-            stderr=subprocess.DEVNULL
+            stdout=log_file,
+            stderr=log_file
         )
-    except Exception:
+    except Exception as e:
+        log_file.write(f"[manager] Failed to start server process: {e}\n")
+        log_file.flush()
         return False
     for _ in range(20):
         if is_port_open(SERVER_PORT):

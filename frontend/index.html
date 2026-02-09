@@ -22,6 +22,191 @@
             --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
             --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
             --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            --bubble-max-width: 80%;
+        }
+
+        body.theme-boyfriend {
+            --primary-color: #f472b6;
+            --primary-hover: #ec4899;
+            --bg-color: #fff7fb;
+            --surface-color: #ffe4ef;
+            --text-primary: #4b2b3a;
+            --text-secondary: #a1617a;
+            --user-msg-bg: #f472b6;
+            --user-msg-text: #fff7fb;
+            --ai-msg-bg: #fff7fb;
+            --ai-msg-text: #4b2b3a;
+        }
+
+        body.theme-boyfriend .header {
+            background: var(--surface-color);
+            border-bottom: 1px solid #f1c4d6;
+        }
+
+        body.theme-boyfriend .skill-button {
+            background-color: var(--surface-color);
+            border-color: #f1c4d6;
+            color: var(--text-primary);
+        }
+
+        body.theme-boyfriend .skill-button:hover {
+            background-color: #ffe7f1;
+            border-color: #f3b2cc;
+        }
+
+        body.theme-boyfriend .skill-button:focus-visible {
+            border-color: #f9a8d4;
+            box-shadow: 0 0 0 3px rgba(249, 168, 212, 0.35);
+        }
+
+        body.theme-boyfriend .skill-menu {
+            background: var(--surface-color);
+            border-color: #f1c4d6;
+        }
+
+        body.theme-boyfriend .skill-item:hover {
+            background: #ffe7f1;
+            border-color: #f3b2cc;
+        }
+
+        body.theme-boyfriend .skill-item.active {
+            background: rgba(244, 114, 182, 0.18);
+            color: #db2777;
+            border-color: rgba(244, 114, 182, 0.4);
+        }
+
+        body.theme-boyfriend .logo {
+            color: var(--text-primary);
+        }
+
+        body.theme-boyfriend .skill-button-label::before {
+            box-shadow: 0 0 0 2px rgba(244, 114, 182, 0.25);
+        }
+
+        body.theme-boyfriend .skill-button .select-arrow {
+            color: var(--text-secondary);
+        }
+
+        body.theme-boyfriend .skill-item {
+            color: var(--text-primary);
+        }
+
+        body.theme-boyfriend .system-message {
+            background-color: rgba(244, 114, 182, 0.12);
+            border-color: rgba(244, 114, 182, 0.2);
+        }
+
+        body.theme-boyfriend .message-bubble pre {
+            background: #ffe7f1;
+            border-color: #f3b2cc;
+        }
+
+        body.theme-boyfriend .message-bubble code {
+            background: rgba(244, 114, 182, 0.12);
+        }
+
+        body.theme-boyfriend .input-area {
+            background: rgba(255, 228, 239, 0.85);
+            border-top: 1px solid rgba(244, 114, 182, 0.2);
+        }
+
+        body.theme-boyfriend .input-wrapper {
+            background: #fff7fb;
+            border-color: rgba(244, 114, 182, 0.25);
+        }
+
+        body.theme-boyfriend .input-wrapper:focus-within {
+            border-color: rgba(244, 114, 182, 0.45);
+            box-shadow: 0 12px 24px rgba(244, 114, 182, 0.15);
+        }
+
+        body.theme-boyfriend input[type="text"]::placeholder {
+            color: #c0849b;
+        }
+
+        body.theme-boyfriend .upload-btn {
+            color: var(--text-primary);
+        }
+
+        body.theme-boyfriend .upload-btn:hover {
+            background: #ffe7f1;
+        }
+
+        body.theme-boyfriend .upload-info .clear-upload:hover {
+            color: #c0266d;
+        }
+
+        body.theme-boyfriend .image-bubble .download-link {
+            color: #db2777;
+        }
+
+        body.theme-boyfriend button#sendBtn {
+            box-shadow: 0 3px 5px rgba(236, 72, 153, 0.25);
+        }
+
+        body.theme-boyfriend button#sendBtn:hover:not(:disabled) {
+            box-shadow: 0 6px 12px rgba(236, 72, 153, 0.3);
+        }
+
+        body.theme-boyfriend button#sendBtn:disabled {
+            background-color: #f3d1e1;
+            color: #c0849b;
+        }
+
+        body.theme-boyfriend .dot {
+            background-color: #f0a6c6;
+        }
+
+        .boyfriend-decorations {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            display: none;
+        }
+
+        body.theme-boyfriend .boyfriend-decorations {
+            display: block;
+        }
+
+        .boyfriend-decorations .paw {
+            position: absolute;
+            background-image: url("assets/a-maozhao_huaban1.png");
+            background-repeat: no-repeat;
+            background-size: contain;
+            opacity: 0.18;
+        }
+
+        .boyfriend-decorations .paw-1 {
+            width: 200px;
+            height: 200px;
+            top: 10%;
+            left: 6%;
+            transform: rotate(-22deg);
+        }
+
+        .boyfriend-decorations .paw-2 {
+            width: 110px;
+            height: 110px;
+            top: 24%;
+            right: 10%;
+            transform: rotate(28deg);
+        }
+
+        .boyfriend-decorations .paw-3 {
+            width: 180px;
+            height: 180px;
+            bottom: 14%;
+            left: 12%;
+            transform: rotate(14deg);
+        }
+
+        .boyfriend-decorations .paw-4 {
+            width: 90px;
+            height: 90px;
+            bottom: 26%;
+            right: 20%;
+            transform: rotate(-32deg);
         }
 
         * { box-sizing: border-box; }
@@ -53,6 +238,12 @@
             z-index: 20;
             height: 64px;
             border-bottom: 1px solid #d0d7de;
+        }
+
+        .chat-container,
+        .input-area {
+            position: relative;
+            z-index: 1;
         }
 
         .logo {
@@ -88,6 +279,7 @@
             display: flex;
             align-items: center;
             gap: 16px;
+            margin-right: 8px;
         }
 
         /* Skill Dropdown (GitHub-like) */
@@ -152,7 +344,7 @@
 
         .skill-menu {
             position: absolute;
-            right: 0;
+            left: 0;
             top: calc(100% + 6px);
             min-width: 220px;
             background: #ffffff;
@@ -222,7 +414,7 @@
         .message-group {
             display: flex;
             flex-direction: column;
-            max-width: 80%; /* Allow wider messages */
+            max-width: var(--bubble-max-width); /* Keep user/ai consistent */
             animation: slideIn 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
 
@@ -249,6 +441,9 @@
             position: relative;
             box-shadow: var(--shadow-sm);
             word-wrap: break-word;
+            max-width: 100%;
+            display: inline-block;
+            width: fit-content;
         }
 
         .message-group.user .message-bubble {
@@ -311,37 +506,35 @@
             border: 1px solid rgba(0,0,0,0.02);
         }
 
-        .system-message-row {
-            align-self: center;
+        .system-message.connection-notice {
             display: inline-flex;
             align-items: center;
-            gap: 10px;
-            margin: 16px 0;
+            gap: 12px;
+            background: rgba(248, 113, 113, 0.12);
+            color: #991b1b;
+            border: 1px solid rgba(248, 113, 113, 0.25);
         }
 
-        .system-message-row .system-message {
-            margin: 0;
-        }
-
-        .system-message-row .system-action-btn {
-            background: #ffffff;
-            color: #1d4ed8;
-            border: 1px solid #c7d2fe;
-            padding: 4px 10px;
+        .system-message.connection-notice .reconnect-button {
+            border: none;
+            background: #ef4444;
+            color: #fff;
+            padding: 6px 12px;
             border-radius: 999px;
             font-size: 0.8rem;
             cursor: pointer;
-            transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+            transition: transform 0.15s ease, background-color 0.15s ease;
         }
 
-        .system-message-row .system-action-btn:hover {
-            background: #eef2ff;
-            border-color: #a5b4fc;
+        .system-message.connection-notice .reconnect-button:hover {
+            background: #dc2626;
+            transform: translateY(-1px);
         }
 
-        .system-message-row .system-action-btn:disabled {
-            opacity: 0.6;
+        .system-message.connection-notice .reconnect-button:disabled {
+            background: #fca5a5;
             cursor: not-allowed;
+            transform: none;
         }
 
         /* Markdown Styles */
@@ -377,8 +570,15 @@
             z-index: 10;
         }
 
-        .input-wrapper {
+        .input-container {
             max-width: 900px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .input-wrapper {
             width: 100%;
             display: flex;
             gap: 12px;
@@ -495,6 +695,88 @@
             display: block;
         }
 
+        .image-caption {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .upload-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            border: none;
+            background: transparent;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: #111827;
+            box-shadow: none;
+        }
+
+        .upload-btn:hover {
+            background: #f3f4f6;
+        }
+
+        .upload-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+            min-height: 1.1em;
+            width: 100%;
+            padding-left: 18px;
+        }
+
+        .upload-info.hidden {
+            display: none;
+        }
+
+        .upload-info .file-name {
+            max-width: 240px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .upload-info .clear-upload {
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 1rem;
+            line-height: 1;
+            padding: 0 2px;
+        }
+
+        .upload-info .clear-upload:hover {
+            color: #111827;
+        }
+
+        .image-bubble {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            align-items: flex-start;
+        }
+
+        .image-bubble img {
+            width: 100%;
+            height: auto;
+            max-width: 280px;
+            max-height: 280px;
+            border-radius: 12px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .image-bubble .download-link {
+            font-size: 0.82rem;
+            color: #1d4ed8;
+            text-decoration: none;
+        }
+
         /* Scrollbar Styling */
         .chat-container::-webkit-scrollbar {
             width: 10px;
@@ -533,6 +815,13 @@
         </div>
     </div>
 
+    <div class="boyfriend-decorations" aria-hidden="true">
+        <span class="paw paw-1"></span>
+        <span class="paw paw-2"></span>
+        <span class="paw paw-3"></span>
+        <span class="paw paw-4"></span>
+    </div>
+
     <div class="chat-container" id="chatContainer">
         <div class="chat-content" id="chatContent">
             <div class="system-message">欢迎回来，今天想聊点什么？</div>
@@ -551,11 +840,23 @@
     </template>
 
     <div class="input-area">
-        <div class="input-wrapper">
-            <input type="text" id="userInput" placeholder="输入你的想法..." autocomplete="off">
-            <button id="sendBtn" aria-label="发送">
-                <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
-            </button>
+        <div class="input-container">
+            <div class="upload-info hidden" id="uploadInfo">
+                <span class="file-name" id="uploadFileName"></span>
+                <button class="clear-upload" id="clearUploadBtn" type="button" aria-label="清除已上传图片">×</button>
+            </div>
+            <div class="input-wrapper">
+                <input type="file" id="imageInput" accept="image/*" hidden>
+                <input type="text" id="userInput" placeholder="输入你的想法..." autocomplete="off">
+                <label class="upload-btn" for="imageInput" title="上传照片">
+                    <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+                        <path fill="currentColor" d="M16.5 6.5l-7.8 7.8a3 3 0 1 0 4.2 4.2l8.2-8.2a4.5 4.5 0 0 0-6.4-6.4l-8.3 8.3a6 6 0 1 0 8.5 8.5l7.2-7.2-1.4-1.4-7.2 7.2a4 4 0 1 1-5.7-5.7l8.3-8.3a2.5 2.5 0 0 1 3.5 3.5l-8.2 8.2a1 1 0 1 1-1.4-1.4l7.8-7.8-1.4-1.4z"/>
+                    </svg>
+                </label>
+                <button id="sendBtn" aria-label="发送">
+                    <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+                </button>
+            </div>
         </div>
     </div>
 
@@ -569,15 +870,122 @@
         const skillButtonLabel = document.getElementById('skillButtonLabel');
         const skillMenu = document.getElementById('skillMenu');
         const loadingTemplate = document.getElementById('loadingTemplate');
+        const imageInput = document.getElementById('imageInput');
+        const uploadInfo = document.getElementById('uploadInfo');
+        const uploadFileName = document.getElementById('uploadFileName');
+        const clearUploadBtn = document.getElementById('clearUploadBtn');
+        const previewCanvas = document.createElement('canvas');
         
         
         let isProcessing = false;
         let loadingElement = null;
         let selectedSkillValue = 'auto';
+        let baseImageData = null;
+        let uploadedImageSrc = '';
+        let currentAdjustments = {
+            exposure: 0,
+            contrast: 1,
+            saturation: 1,
+            warmth: 1,
+            highlights: 0,
+            shadows: 0,
+            whites: 0,
+            blacks: 0,
+            clarity: 0
+        };
+        function formatFileName(name, maxBaseLength = 16) {
+            if (!name) return '';
+            const lastDot = name.lastIndexOf('.');
+            if (lastDot <= 0 || lastDot === name.length - 1) {
+                if (name.length <= maxBaseLength) return name;
+                return `${name.slice(0, maxBaseLength)}...`;
+            }
+            const base = name.slice(0, lastDot);
+            const ext = name.slice(lastDot);
+            if (base.length <= maxBaseLength) return name;
+            return `${base.slice(0, maxBaseLength)}...${ext}`;
+        }
+
+        function setUploadInfo(name) {
+            if (!name) {
+                uploadInfo.classList.add('hidden');
+                uploadFileName.textContent = '';
+                return;
+            }
+            const displayName = formatFileName(name);
+            uploadFileName.textContent = `已选择：${displayName}`;
+            uploadInfo.classList.remove('hidden');
+        }
+
+        function clearUploadState({ keepImageData = false } = {}) {
+            uploadedImageSrc = '';
+            imageInput.value = '';
+            setUploadInfo('');
+            if (!keepImageData) {
+                baseImageData = null;
+            }
+        }
+
+        function clearPendingImage() {
+            clearUploadState({ keepImageData: false });
+        }
+
+
+        const CATEGORY_LABELS = {
+            landscape: '风景',
+            people: '人物',
+            portrait: '人像',
+            car_model: '车模',
+            model: '模型',
+            unknown: '未识别'
+        };
+        const BOYFRIEND_SKILL_NAME = 'boyfriend-mode';
+        const BOYFRIEND_MODE_ON = new Set(['开启男友模式', '男友模式']);
+        const BOYFRIEND_MODE_OFF = new Set(['结束男友模式', '终止男友模式', '结束']);
+
+        const CATEGORY_PRESETS = {
+            landscape: { exposure: 0.06, contrast: 1.12, saturation: 1.18, warmth: 1.03 },
+            people: { exposure: 0.08, contrast: 1.05, saturation: 1.08, warmth: 1.05 },
+            portrait: { exposure: 0.1, contrast: 1.02, saturation: 1.06, warmth: 1.06 },
+            car_model: { exposure: 0.04, contrast: 1.18, saturation: 1.12, warmth: 1.02 },
+            model: { exposure: 0.05, contrast: 1.1, saturation: 1.08, warmth: 1.01 },
+            unknown: { exposure: 0.04, contrast: 1.06, saturation: 1.04, warmth: 1.02 }
+        };
 
         function closeSkillMenu() {
             skillMenu.classList.remove('open');
             skillButton.setAttribute('aria-expanded', 'false');
+        }
+
+        function setSelectedSkill(value, label) {
+            selectedSkillValue = value;
+            if (label) {
+                skillButtonLabel.textContent = label;
+            }
+            Array.from(skillMenu.children).forEach(child => {
+                if (child.dataset.value === value) {
+                    child.classList.add('active');
+                } else {
+                    child.classList.remove('active');
+                }
+            });
+        }
+
+        function setBoyfriendTheme(enabled) {
+            document.body.classList.toggle('theme-boyfriend', Boolean(enabled));
+        }
+
+        function syncThemeWithSelection() {
+            if (selectedSkillValue === BOYFRIEND_SKILL_NAME) {
+                setBoyfriendTheme(true);
+            } else {
+                setBoyfriendTheme(false);
+            }
+        }
+
+        function syncThemeWithResponse(skillName) {
+            if (selectedSkillValue !== 'auto') return;
+            setBoyfriendTheme(skillName === BOYFRIEND_SKILL_NAME);
         }
 
         function openSkillMenu() {
@@ -594,11 +1002,9 @@
                 item.classList.add('active');
             }
             item.addEventListener('click', () => {
-                selectedSkillValue = skill.value;
-                skillButtonLabel.textContent = skill.label;
-                Array.from(skillMenu.children).forEach(child => child.classList.remove('active'));
-                item.classList.add('active');
+                setSelectedSkill(skill.value, skill.label);
                 closeSkillMenu();
+                syncThemeWithSelection();
             });
             return item;
         }
@@ -609,12 +1015,17 @@
                 const res = await fetch('/skills');
                 if (res.ok) {
                     const skills = await res.json();
+                    const visibleSkills = skills.filter(skill => skill.name !== BOYFRIEND_SKILL_NAME);
                     const allSkills = [{ value: 'auto', label: '自动识别' }]
-                        .concat(skills.map(skill => ({ value: skill.name, label: skill.name })));
+                        .concat(visibleSkills.map(skill => ({ value: skill.name, label: skill.name })));
                     skillMenu.innerHTML = '';
                     allSkills.forEach(skill => {
                         skillMenu.appendChild(renderSkillItem(skill));
                     });
+                    if (selectedSkillValue === BOYFRIEND_SKILL_NAME) {
+                        setSelectedSkill('auto', '自动识别');
+                        syncThemeWithSelection();
+                    }
                 }
             } catch (e) {
                 console.error("Failed to load skills", e);
@@ -622,6 +1033,7 @@
         }
 
         loadSkills();
+
 
         skillButton.addEventListener('click', (e) => {
             e.stopPropagation();
@@ -638,112 +1050,254 @@
             }
         });
 
-        let heartbeatFailCount = 0;
-        let heartbeatOnline = true;
+        const HEARTBEAT_INTERVAL_MS = 6000;
+        const HEARTBEAT_TIMEOUT_MS = 3000;
+        const IDLE_TIMEOUT_MS = 60 * 1000;
+        let isConnected = true;
         let heartbeatInFlight = false;
-        let disconnectNotified = false;
-        let disconnectMessageEl = null;
-        const HEARTBEAT_INTERVAL = 5000;
-        const HEARTBEAT_TIMEOUT = 3000;
-        const HEARTBEAT_FAIL_THRESHOLD = 2;
+        let connectionNotice = null;
+        let pendingChat = null;
+        let idleMode = false;
+        let idleTimer = null;
+        let heartbeatTimer = null;
+        let reconnecting = false;
 
-        function appendSystemMessage(text) {
-            const systemDiv = document.createElement('div');
-            systemDiv.className = 'system-message';
-            systemDiv.textContent = text;
-            chatContent.appendChild(systemDiv);
-            scrollToBottom();
-        }
+        function ensureConnectionNotice() {
+            if (connectionNotice) return connectionNotice;
+            const notice = document.createElement('div');
+            notice.className = 'system-message connection-notice';
+            notice.id = 'connectionNotice';
 
-        function appendDisconnectMessage() {
-            if (disconnectMessageEl) return;
-            const row = document.createElement('div');
-            row.className = 'system-message-row';
+            const text = document.createElement('span');
+            text.className = 'connection-text';
+            text.textContent = '连接已断开';
 
-            const systemDiv = document.createElement('div');
-            systemDiv.className = 'system-message';
-
-            const textSpan = document.createElement('span');
-            textSpan.textContent = '检测到脚本已断开，请在终端重启或点击右侧按钮。';
-
-            const actionBtn = document.createElement('button');
-            actionBtn.className = 'system-action-btn';
-            actionBtn.type = 'button';
-            actionBtn.textContent = '重新启动';
-            actionBtn.addEventListener('click', async () => {
-                actionBtn.disabled = true;
-                textSpan.textContent = '正在尝试重新启动...';
-                try {
-                    await fetch('http://localhost:8010/restart', { method: 'POST' });
-                } catch (e) {
-                    // Manager may be down; continue polling
-                }
-                const recovered = await waitForRecovery();
-                if (!recovered) {
-                    textSpan.textContent = '仍未连接，请确保脚本已重启后再试。';
-                    actionBtn.disabled = false;
-                }
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.className = 'reconnect-button';
+            button.textContent = '重连';
+            button.addEventListener('click', () => {
+                manualReconnect();
             });
 
-            systemDiv.appendChild(textSpan);
-            row.appendChild(systemDiv);
-            row.appendChild(actionBtn);
-            chatContent.appendChild(row);
-            disconnectMessageEl = row;
-            scrollToBottom();
+            notice.appendChild(text);
+            notice.appendChild(button);
+            connectionNotice = notice;
+            return notice;
         }
 
-        async function waitForRecovery() {
-            for (let i = 0; i < 6; i += 1) {
-                await new Promise(resolve => setTimeout(resolve, 1000));
-                await checkHeartbeat(true);
-                if (heartbeatOnline) {
-                    return true;
-                }
+        function showConnectionNotice(message) {
+            const notice = ensureConnectionNotice();
+            const text = notice.querySelector('.connection-text');
+            if (message) text.textContent = message;
+            if (!chatContent.contains(notice)) {
+                chatContent.appendChild(notice);
+                scrollToBottom();
             }
-            return false;
         }
 
-        async function checkHeartbeat(forceShow = false) {
+        function hideConnectionNotice() {
+            if (connectionNotice && connectionNotice.parentNode) {
+                connectionNotice.parentNode.removeChild(connectionNotice);
+            }
+        }
+
+        function setConnectionState(connected, message) {
+            isConnected = connected;
+            if (connected) {
+                hideConnectionNotice();
+            } else {
+                showConnectionNotice(message || '连接已断开');
+            }
+        }
+
+        async function checkHeartbeat({ manual = false } = {}) {
+            if (idleMode) return;
             if (heartbeatInFlight) return;
             heartbeatInFlight = true;
             const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), HEARTBEAT_TIMEOUT);
-
+            const timeout = setTimeout(() => controller.abort(), HEARTBEAT_TIMEOUT_MS);
             try {
-                const res = await fetch('/heartbeat', {
+                const response = await fetch('/heartbeat', {
                     method: 'GET',
                     cache: 'no-store',
-                    keepalive: true,
                     signal: controller.signal
                 });
-                if (!res.ok) throw new Error('Heartbeat failed');
-                heartbeatFailCount = 0;
-                if (!heartbeatOnline) {
-                    heartbeatOnline = true;
-                    if (disconnectNotified) {
-                        appendSystemMessage('服务已恢复，可以继续对话。');
-                    }
-                    disconnectNotified = false;
-                    disconnectMessageEl = null;
+                if (!response.ok) throw new Error('Heartbeat failed');
+                if (!isConnected) {
+                    setConnectionState(true);
+                    retryPendingChat();
                 }
-            } catch (e) {
-                heartbeatFailCount += 1;
-                if (heartbeatFailCount >= HEARTBEAT_FAIL_THRESHOLD || forceShow) {
-                    heartbeatOnline = false;
-                    if (!disconnectNotified) {
-                        appendDisconnectMessage();
-                        disconnectNotified = true;
-                    }
+            } catch (error) {
+                if (isProcessing) {
+                    return;
+                }
+                if (isConnected) {
+                    setConnectionState(false, '连接已断开');
+                } else if (manual) {
+                    showConnectionNotice('仍未连接，请稍后重试');
                 }
             } finally {
-                clearTimeout(timeoutId);
+                clearTimeout(timeout);
                 heartbeatInFlight = false;
             }
         }
 
+        async function requestManagerRestart() {
+            try {
+                await fetch('http://127.0.0.1:8010/restart', {
+                    method: 'POST',
+                    mode: 'cors'
+                });
+            } catch (error) {
+                // Manager may be down; heartbeat will still handle failure messaging.
+            }
+        }
+
+        async function requestShutdown() {
+            try {
+                await fetch('/shutdown', { method: 'GET', cache: 'no-store' });
+            } catch (error) {
+                // Ignore shutdown failures; server might already be down.
+            }
+        }
+
+        function enterIdleMode() {
+            if (idleMode) return;
+            idleMode = true;
+            markDisconnected('已自动断开（长时间未操作）');
+            requestShutdown();
+        }
+
+        function exitIdleMode() {
+            if (!idleMode) return;
+            idleMode = false;
+        }
+
+        function resetIdleTimer() {
+            if (idleTimer) clearTimeout(idleTimer);
+            if (isProcessing) return;
+            idleTimer = setTimeout(enterIdleMode, IDLE_TIMEOUT_MS);
+        }
+
+        function trackActivity() {
+            resetIdleTimer();
+            if (idleMode) {
+                showConnectionNotice('连接断开，点击重连继续');
+            }
+        }
+
+        async function waitForHeartbeat(maxAttempts = 10) {
+            for (let i = 0; i < maxAttempts; i += 1) {
+                await checkHeartbeat({ manual: i === maxAttempts - 1 });
+                if (isConnected) return true;
+                await new Promise(resolve => setTimeout(resolve, 600));
+            }
+            return false;
+        }
+
+        async function manualReconnect() {
+            if (reconnecting) return;
+            reconnecting = true;
+            const notice = ensureConnectionNotice();
+            const button = notice.querySelector('.reconnect-button');
+            button.disabled = true;
+            button.textContent = '重连中...';
+            exitIdleMode();
+            await requestManagerRestart();
+            await waitForHeartbeat(10);
+            if (connectionNotice && connectionNotice.parentNode) {
+                button.disabled = false;
+                button.textContent = '重连';
+            }
+            reconnecting = false;
+        }
+
         checkHeartbeat();
-        setInterval(checkHeartbeat, HEARTBEAT_INTERVAL);
+        heartbeatTimer = setInterval(() => checkHeartbeat(), HEARTBEAT_INTERVAL_MS);
+        resetIdleTimer();
+
+        ['mousemove', 'keydown', 'click', 'scroll', 'touchstart'].forEach(eventName => {
+            window.addEventListener(eventName, trackActivity, { passive: true });
+        });
+
+        function markDisconnected(message) {
+            setConnectionState(false, message || '连接已断开');
+        }
+
+        function createNetworkError(message) {
+            const error = new Error(message);
+            error.isNetwork = true;
+            return error;
+        }
+
+        function shouldRequestMoreInfo(text) {
+            if (!text) return false;
+            return /(需要更多信息|信息不足|请提供|请补充|补充信息|无法提供)/.test(text);
+        }
+
+        async function fetchChat(payload) {
+            let response;
+            try {
+                response = await fetch('/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+            } catch (error) {
+                throw createNetworkError('Network request failed');
+            }
+            if (!response.ok) {
+                const error = new Error('Network response was not ok');
+                error.status = response.status;
+                throw error;
+            }
+            return response.json();
+        }
+
+        async function handleChatRequest(payload, meta, { fromRetry = false } = {}) {
+            try {
+                const data = await fetchChat(payload);
+                hideLoading();
+                syncThemeWithResponse(data.skill);
+                const needsInfo = shouldRequestMoreInfo(data.reply);
+                const serverImage = data.image_base64 ? `data:image/png;base64,${data.image_base64}` : '';
+                const imageOptions = (!needsInfo && serverImage)
+                    ? { src: serverImage, captionText: '调色结果', downloadHref: serverImage }
+                    : null;
+                appendMessage(data.reply, 'ai', data.skill, imageOptions);
+                if (meta?.imageUsed && !needsInfo) {
+                    clearPendingImage();
+                }
+                pendingChat = null;
+                if (!isConnected) {
+                    setConnectionState(true);
+                }
+                return true;
+            } catch (error) {
+                hideLoading();
+                if (error.isNetwork) {
+                    pendingChat = { payload, meta };
+                    markDisconnected(fromRetry ? '仍未连接，请稍后重试' : '连接已断开');
+                    return false;
+                }
+                appendMessage(`Error: ${error.message}`, 'system');
+                return false;
+            }
+        }
+
+        async function retryPendingChat() {
+            if (!pendingChat || isProcessing) return;
+            const { payload, meta } = pendingChat;
+            isProcessing = true;
+            resetIdleTimer();
+            sendBtn.disabled = true;
+            showLoading();
+            await handleChatRequest(payload, meta, { fromRetry: true });
+            isProcessing = false;
+            sendBtn.disabled = false;
+            userInput.focus();
+        }
 
         function showLoading() {
             if (loadingElement) return;
@@ -768,7 +1322,30 @@
             });
         }
 
-        function appendMessage(text, type, skillName = null) {
+        function appendImageToBubble(bubble, { src, captionText = '', downloadHref = '' } = {}) {
+            if (!src) return;
+            bubble.classList.add('image-bubble');
+            const img = document.createElement('img');
+            img.src = src;
+            img.alt = captionText || '图片';
+            bubble.appendChild(img);
+            if (captionText) {
+                const caption = document.createElement('div');
+                caption.className = 'image-caption';
+                caption.textContent = captionText;
+                bubble.appendChild(caption);
+            }
+            if (downloadHref) {
+                const link = document.createElement('a');
+                link.className = 'download-link';
+                link.href = downloadHref;
+                link.download = 'graded.png';
+                link.textContent = '下载调色预览';
+                bubble.appendChild(link);
+            }
+        }
+
+        function appendMessage(text, type, skillName = null, imageOptions = null) {
             const groupDiv = document.createElement('div');
             groupDiv.className = `message-group ${type}`;
 
@@ -779,7 +1356,7 @@
 
                 const name = document.createElement('span');
                 name.className = 'skill-badge-name';
-                name.textContent = skillName;
+                name.textContent = skillName === BOYFRIEND_SKILL_NAME ? '男友模式' : skillName;
 
                 badge.appendChild(name);
                 groupDiv.appendChild(badge);
@@ -797,7 +1374,16 @@
             // Basic Markdown code block detection (very simple)
             formattedText = formattedText.replace(/```([\s\S]*?)```/g, '<pre><code>$1</code></pre>');
 
-            bubble.innerHTML = formattedText;
+            let textContainer = null;
+            if (formattedText) {
+                textContainer = document.createElement('div');
+                textContainer.className = 'bubble-text';
+                textContainer.innerHTML = formattedText;
+                bubble.appendChild(textContainer);
+            }
+            if (imageOptions) {
+                appendImageToBubble(bubble, imageOptions);
+            }
             groupDiv.appendChild(bubble);
             
             // Insert before loading indicator if it exists
@@ -806,43 +1392,253 @@
             } else {
                 chatContent.appendChild(groupDiv);
             }
-            
+
             scrollToBottom();
         }
+
+        function clamp(value, min, max) {
+            return Math.max(min, Math.min(max, value));
+        }
+
+        function rgbToHsl(r, g, b) {
+            r /= 255; g /= 255; b /= 255;
+            const max = Math.max(r, g, b);
+            const min = Math.min(r, g, b);
+            let h, s;
+            const l = (max + min) / 2;
+            if (max === min) {
+                h = s = 0;
+            } else {
+                const d = max - min;
+                s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+                switch (max) {
+                    case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+                    case g: h = (b - r) / d + 2; break;
+                    default: h = (r - g) / d + 4; break;
+                }
+                h /= 6;
+            }
+            return [h, s, l];
+        }
+
+        function hslToRgb(h, s, l) {
+            let r, g, b;
+            if (s === 0) {
+                r = g = b = l;
+            } else {
+                const hue2rgb = (p, q, t) => {
+                    if (t < 0) t += 1;
+                    if (t > 1) t -= 1;
+                    if (t < 1 / 6) return p + (q - p) * 6 * t;
+                    if (t < 1 / 2) return q;
+                    if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+                    return p;
+                };
+                const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+                const p = 2 * l - q;
+                r = hue2rgb(p, q, h + 1 / 3);
+                g = hue2rgb(p, q, h);
+                b = hue2rgb(p, q, h - 1 / 3);
+            }
+            return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)];
+        }
+
+        function applyAdjustmentsToData(data, exposure, contrast, saturation, warmth) {
+            const exp = 1 + exposure;
+            const sat = saturation;
+            const warm = warmth;
+            const highlights = currentAdjustments.highlights;
+            const shadows = currentAdjustments.shadows;
+            const whites = currentAdjustments.whites;
+            const blacks = currentAdjustments.blacks;
+            const clarity = currentAdjustments.clarity;
+            for (let i = 0; i < data.length; i += 4) {
+                let r = data[i] * exp;
+                let g = data[i + 1] * exp;
+                let b = data[i + 2] * exp;
+
+                r = (r - 128) * contrast + 128;
+                g = (g - 128) * contrast + 128;
+                b = (b - 128) * contrast + 128;
+
+                const luma = (r * 0.2126 + g * 0.7152 + b * 0.0722) / 255;
+                if (luma > 0.5 && highlights !== 0) {
+                    const delta = (highlights / 100) * 80;
+                    r += delta; g += delta; b += delta;
+                }
+                if (luma < 0.5 && shadows !== 0) {
+                    const delta = (shadows / 100) * 80;
+                    r += delta; g += delta; b += delta;
+                }
+                if (luma > 0.5 && whites !== 0) {
+                    const delta = (whites / 100) * 60;
+                    r += delta; g += delta; b += delta;
+                }
+                if (luma < 0.5 && blacks !== 0) {
+                    const delta = (blacks / 100) * 60;
+                    r += delta; g += delta; b += delta;
+                }
+                if (clarity !== 0) {
+                    const clarityFactor = 1 + (clarity / 100) * 0.3;
+                    r = (r - 128) * clarityFactor + 128;
+                    g = (g - 128) * clarityFactor + 128;
+                    b = (b - 128) * clarityFactor + 128;
+                }
+
+                r *= warm;
+                b *= (2 - warm);
+
+                r = clamp(r, 0, 255);
+                g = clamp(g, 0, 255);
+                b = clamp(b, 0, 255);
+
+                let [h, s, l] = rgbToHsl(r, g, b);
+                s = clamp(s * sat, 0, 1);
+                const [nr, ng, nb] = hslToRgb(h, s, l);
+
+                data[i] = nr;
+                data[i + 1] = ng;
+                data[i + 2] = nb;
+            }
+        }
+
+        function renderPreview() {
+            if (!baseImageData) return;
+            const ctx = previewCanvas.getContext('2d');
+            const dataCopy = new ImageData(
+                new Uint8ClampedArray(baseImageData.data),
+                baseImageData.width,
+                baseImageData.height
+            );
+            const exposure = currentAdjustments.exposure;
+            const contrast = currentAdjustments.contrast;
+            const saturation = currentAdjustments.saturation;
+            const warmth = currentAdjustments.warmth;
+            applyAdjustmentsToData(dataCopy.data, exposure, contrast, saturation, warmth);
+            ctx.putImageData(dataCopy, 0, 0);
+        }
+
+        function applyPreset(category) {
+            const preset = CATEGORY_PRESETS[category] || CATEGORY_PRESETS.unknown;
+            currentAdjustments = { ...preset };
+            renderPreview();
+        }
+
+        function setCategory(category) {
+            applyPreset(category || 'unknown');
+        }
+
+        function detectCategoryFromText(text) {
+            const value = (text || '').toLowerCase();
+            if (value.includes('风景')) return 'landscape';
+            if (value.includes('人像')) return 'portrait';
+            if (value.includes('人物') || value.includes('人文') || value.includes('人')) return 'people';
+            if (value.includes('车模') || value.includes('汽车') || value.includes('车')) return 'car_model';
+            return 'unknown';
+        }
+
+        function loadImageToCanvas(file) {
+            const reader = new FileReader();
+            reader.onload = () => {
+                uploadedImageSrc = reader.result;
+                const img = new Image();
+                img.onload = () => {
+                    const maxSide = 960;
+                    let targetWidth = img.width;
+                    let targetHeight = img.height;
+                    if (Math.max(img.width, img.height) > maxSide) {
+                        const scale = maxSide / Math.max(img.width, img.height);
+                        targetWidth = Math.round(img.width * scale);
+                        targetHeight = Math.round(img.height * scale);
+                    }
+                    const offscreen = document.createElement('canvas');
+                    offscreen.width = targetWidth;
+                    offscreen.height = targetHeight;
+                    const octx = offscreen.getContext('2d');
+                    octx.drawImage(img, 0, 0, targetWidth, targetHeight);
+                    baseImageData = octx.getImageData(0, 0, targetWidth, targetHeight);
+                    previewCanvas.width = targetWidth;
+                    previewCanvas.height = targetHeight;
+                };
+                img.src = reader.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        imageInput.addEventListener('change', () => {
+            const file = imageInput.files[0];
+            if (!file) {
+                setUploadInfo('');
+                return;
+            }
+            trackActivity();
+            setUploadInfo(file.name);
+            loadImageToCanvas(file);
+        });
+
+        clearUploadBtn.addEventListener('click', () => {
+            clearPendingImage();
+        });
 
         async function sendMessage() {
             const text = userInput.value.trim();
             if (!text || isProcessing) return;
+            if (pendingChat) {
+                showConnectionNotice('有未完成的消息，请先重连');
+                return;
+            }
 
             const selectedSkill = selectedSkillValue;
+            if (BOYFRIEND_MODE_ON.has(text)) {
+                setBoyfriendTheme(true);
+            } else if (BOYFRIEND_MODE_OFF.has(text)) {
+                setBoyfriendTheme(false);
+                if (selectedSkillValue === BOYFRIEND_SKILL_NAME) {
+                    setSelectedSkill('auto', '自动识别');
+                }
+            }
             
+            const hasNewUpload = !!uploadedImageSrc;
+            const imageForAdjustment = uploadedImageSrc;
+            const userImageSrc = hasNewUpload ? uploadedImageSrc : '';
+
             userInput.value = '';
-            appendMessage(text, 'user');
+            const userImageOptions = userImageSrc ? { src: userImageSrc } : null;
+            appendMessage(text, 'user', null, userImageOptions);
             
             isProcessing = true;
             sendBtn.disabled = true;
             showLoading();
 
+            const inferredCategory = detectCategoryFromText(text);
+            if (inferredCategory !== 'unknown') {
+                setCategory(inferredCategory);
+            }
+            renderPreview();
+
+            const payloadMessage = imageForAdjustment ? `${text}\n[[IMAGE_ATTACHED]]` : text;
+            const payload = {
+                message: payloadMessage,
+                skill: selectedSkill,
+                image_data: imageForAdjustment || ''
+            };
+
             try {
-                const response = await fetch('/chat', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ 
-                        message: text,
-                        skill: selectedSkill 
-                    })
-                });
-                
-                if (!response.ok) throw new Error('Network response was not ok');
-                
-                const data = await response.json();
-                hideLoading();
-                appendMessage(data.reply, 'ai', data.skill);
-            } catch (error) {
-                hideLoading();
-                appendMessage(`Error: ${error.message}`, 'system');
+                if (!isConnected || idleMode) {
+                    pendingChat = { payload, meta: { imageUsed: !!imageForAdjustment, userText: text } };
+                    markDisconnected('连接已断开');
+                    await manualReconnect();
+                    if (isConnected) {
+                        await handleChatRequest(payload, { imageUsed: !!imageForAdjustment, userText: text }, { fromRetry: true });
+                    } else {
+                        hideLoading();
+                    }
+                    return;
+                }
+                await handleChatRequest(payload, { imageUsed: !!imageForAdjustment, userText: text });
             } finally {
                 isProcessing = false;
+                resetIdleTimer();
                 sendBtn.disabled = false;
                 userInput.focus();
             }
